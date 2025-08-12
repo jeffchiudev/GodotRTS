@@ -1,25 +1,21 @@
 extends CharacterBody2D
 
+@export var health : int = 100
+@export var damage : int = 20
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
+@export var move_speed : float = 50.0
+@export var attack_range : float = 20.0
+@export var attack_rate : float = 0.5
+var last_attack_time : float
 
+var target : CharacterBody2D
 
-func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
+var agent : NavigationAgent2D
+var sprite : Sprite2D
 
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+@export var is_player : bool
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis("ui_left", "ui_right")
-	if direction:
-		velocity.x = direction * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-
-	move_and_slide()
+func _ready (): 
+	agent = $NavigationAgent2D
+	sprite = $Sprite2D
+	
