@@ -19,3 +19,15 @@ func _ready ():
 	agent = $NavigationAgent2D
 	sprite = $Sprite2D
 	
+func _try_attack_target ():
+	var cur_time = Time.get_unix_time_from_system()
+	
+	if cur_time - last_attack_time > attack_rate:
+		target.take_damage(damage)
+		last_attack_time = cur_time
+	
+func take_damage (damage_to_take):
+	health -= damage_to_take
+	
+	if health <= 0:
+		queue_free()
