@@ -19,6 +19,13 @@ func _ready ():
 	agent = $NavigationAgent2D
 	sprite = $Sprite2D
 	
+func move_to_location (location):
+	target = null
+	agent.target_position = location
+	
+func set_target (new_target):
+	target = new_target
+	
 func _try_attack_target ():
 	var cur_time = Time.get_unix_time_from_system()
 	
